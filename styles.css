@@ -1,0 +1,406 @@
+/* ========================================
+   TOKENS
+   ======================================== */
+:root {
+  --bg:        #0d1b3e;
+  --bg-dark:   #0B3249;
+  --accent:    #E30613;
+  --accent-lt: #ff1a26;
+  --text:      #e8eaf0;
+  --text-muted:#99a0b4;
+  --card-bg:   #1a2a52;
+  --radius:    12px;
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --gradient-main: linear-gradient(
+    to bottom,
+    rgb(11, 50, 73)   0%,
+    rgb(16, 76, 113)  26%,
+    rgb(26, 120, 175) 88%
+  );
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--gradient-main);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { display: block; width: 100%; height: auto; object-fit: cover; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ========================================
+   NAVBAR
+   ======================================== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(9, 18, 40, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(227, 6, 19, 0.3);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.menu-btn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-btn.open span:nth-child(2) { opacity: 0; }
+.menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: rgba(9, 18, 40, 0.97);
+  padding: 16px 24px 24px;
+  list-style: none;
+  gap: 16px;
+  border-bottom: 1px solid rgba(227, 6, 19, 0.3);
+}
+
+.nav-links.open { display: flex; }
+
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ========================================
+   HERO
+   ======================================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 28px 60px;
+  position: relative;
+}
+
+.hero-content { max-width: 480px; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  max-width: 360px;
+}
+
+.accent { color: var(--accent); }
+
+.scroll-hint {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.scroll-arrow {
+  color: var(--accent);
+  font-size: 1.2rem;
+  animation: bounce 1.8s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+.wave-divider {
+  width: 100%;
+  line-height: 0;
+  overflow: visible; /* ← importante, no hidden */
+}
+
+.wave-divider svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========================================
+   SECTIONS
+   ======================================== */
+.section {
+  position: relative;
+  padding: 72px 0 64px;
+  
+}
+
+
+.section-inner {
+  padding: 0 28px;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-inner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.section-inner p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Waves between sections */
+.wave-top, .wave-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.wave-top  { top: -1px; }
+.wave-bottom { bottom: -1px; }
+
+.wave-top svg  {
+  width: 100%;
+  height: 60px;
+  display: block;
+  transform: scaleY(-1);
+}
+
+.wave-bottom svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+
+/* ========================================
+   SERVICES GRID
+   ======================================== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.service-card {
+  background: var(--gradi);
+  border-radius: var(--radius);
+  aspect-ratio: 1;
+  border: 1px solid rgba(227, 6, 19, 0.15);
+  transition: border-color 0.25s, transform 0.25s;
+  background: var(--card-bg);
+}
+
+.service-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* ========================================
+   PRODUCTS GRID
+   ======================================== */
+.products-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  margin-bottom: 28px;
+}
+
+.product-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  transition: border-color 0.25s;
+  background: var(--card-bg);
+}
+
+.product-card:hover { border-color: var(--accent); }
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.25s;
+  text-align: center;
+}
+
+.btn-outline {
+  border: 1.5px solid var(--text);
+  color: var(--text);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-solid {
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid var(--accent);
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn-solid:hover {
+  background: var(--accent-lt);
+  border-color: var(--accent-lt);
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+.cta-section { text-align: center; }
+
+.cta-section .section-inner p {
+  margin-bottom: 28px;
+  font-size: 1rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  background: var(--bg-dark);
+  padding: 40px 24px;
+  text-align: center;
+  border-top: 1px solid rgba(227, 6, 19, 0.2);
+}
+
+.footer .logo {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.footer p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.footer a { color: var(--accent); }
+.footer a:hover { text-decoration: underline; }
+
+/* ========================================
+   SCROLL REVEAL (clase aplicada por JS)
+   ======================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+   RESPONSIVE (tablet+)
+   ======================================== */
+@media (min-width: 768px) {
+  .menu-btn { display: none; }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    background: none;
+    border: none;
+    padding: 0;
+    gap: 28px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+  }
+
+  .hero h1 { font-size: 3rem; }
+}
