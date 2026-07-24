@@ -10,6 +10,7 @@
   --text-muted:#99a0b4;
   --card-bg:   #1a2a52;
   --radius:    12px;
+  --radius-lg: 28px;
   --font-display: 'Rajdhani', sans-serif;
   --font-body:    'Inter', sans-serif;
   --gradient-main: linear-gradient(
@@ -161,27 +162,20 @@ a { color: inherit; text-decoration: none; }
   50%       { transform: translateY(6px); }
 }
 
-.wave-divider {
-  width: 100%;
-  line-height: 0;
-  overflow: visible; /* ← importante, no hidden */
-}
-
-.wave-divider svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* ========================================
-   SECTIONS
+   SECTIONS (glass effect)
    ======================================== */
 .section {
   position: relative;
+  margin: 0 16px 20px;
   padding: 72px 0 64px;
-  
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
-
 
 .section-inner {
   padding: 0 28px;
@@ -202,30 +196,6 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.7;
-}
-
-/* Waves between sections */
-.wave-top, .wave-bottom {
-  position: absolute;
-  left: 0; right: 0;
-  line-height: 0;
-  overflow: hidden;
-}
-
-.wave-top  { top: -1px; }
-.wave-bottom { bottom: -1px; }
-
-.wave-top svg  {
-  width: 100%;
-  height: 60px;
-  display: block;
-  transform: scaleY(-1);
-}
-
-.wave-bottom svg {
-  width: 100%;
-  height: 60px;
-  display: block;
 }
 
 /* ========================================
@@ -267,11 +237,93 @@ a { color: inherit; text-decoration: none; }
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid rgba(227, 6, 19, 0.2);
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, transform 0.25s;
   background: var(--card-bg);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
-.product-card:hover { border-color: var(--accent); }
+.product-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.product-card img {
+  aspect-ratio: 4 / 3;
+}
+
+.product-card-body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.product-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.product-price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.product-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.product-card .btn {
+  margin-top: 8px;
+  align-self: flex-start;
+  padding: 8px 20px;
+  font-size: 0.9rem;
+}
+
+/* ========================================
+   PRODUCTS PAGE HEADER
+   ======================================== */
+.products-header {
+  padding: 140px 28px 20px;
+  text-align: center;
+}
+
+.products-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.products-header p {
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
 
 /* ========================================
    BUTTONS
@@ -399,10 +451,18 @@ a { color: inherit; text-decoration: none; }
     grid-template-columns: 1fr 1fr;
     display: grid;
   }
-  
+
+  .products-grid.full-catalog {
+    align-items: stretch;
+  }
+
+  .section {
+    margin: 0 32px 24px;
+  }
 
   .hero h1 { font-size: 3rem; }
 }
+
 /* ========================================
    RESPONSIVE (desktop / web)
    ======================================== */
@@ -433,6 +493,9 @@ a { color: inherit; text-decoration: none; }
   }
 
   .section {
+    margin: 0 auto 32px;
+    max-width: 1100px;
+    border-radius: 36px;
     padding: 96px 0 88px;
   }
 
@@ -452,6 +515,11 @@ a { color: inherit; text-decoration: none; }
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     gap: 24px;
+  }
+
+  .products-grid.full-catalog {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
   }
 
   .footer {
