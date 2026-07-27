@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="images/isotipo.png">
   <title>3DPM – Impresión 3D</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -17,9 +16,9 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#quienes">Quiénes somos</a></li>
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#productos">Productos</a></li>
+      <li><a href="#quienes">Quiénes somos</a></li>
+      <li><a href="productos.html">Catálogo</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
@@ -39,6 +38,16 @@
 </div>
   </section>
 
+  <!-- SERVICIOS (jerarquía máxima) -->
+  <section class="section" id="servicios">
+    <div class="section-inner">
+      <h2>Nuestros servicios</h2>
+      <div class="services-grid" id="servicios-container">
+        <!-- Generado dinámicamente por render-services.js a partir de categorias.js -->
+      </div>
+    </div>
+  </section>
+
   <!-- QUIÉNES SOMOS -->
   <section class="section" id="quienes">
     <div class="section-inner">
@@ -52,37 +61,6 @@
     <div class="section-inner">
       <h2>¿Qué es lo que hacemos?</h2>
       <p>Nos dedicamos al diseño, modelado y materialización de piezas 3D de alta calidad.</p>
-    </div>
-  </section>
-
-  <!-- SERVICIOS -->
-  <section class="section" id="servicios">
-    <div class="section-inner">
-      <h2>Nuestros servicios</h2>
-      <div class="services-grid">
-        <div class="service-card"></div>
-        <div class="service-card"></div>
-        <div class="service-card"></div>
-        <div class="service-card"></div>
-        <div class="service-card"></div>
-        <div class="service-card"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTOS -->
-  <section class="section section-dark" id="productos">
-    <div class="section-inner">
-      <h2>Algunos de nuestros productos</h2>
-      <div class="products-grid">
-        <div class="product-card">
-          <a href="productos.html"><img src="https://placehold.co/320x200/1a2744/ffffff?text=Producto+1" alt="Producto 1" /></a>
-        </div>
-        <div class="product-card">
-          <img src="https://placehold.co/320x200/1a2744/ffffff?text=Producto+2" alt="Producto 2" />
-        </div>
-      </div>
-      <a href="productos.html" class="btn btn-outline">Ver más productos</a>
     </div>
   </section>
 
@@ -107,5 +85,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="render-services.js"></script>
+  <script src="categorias.js"></script>
 </body>
 </html>

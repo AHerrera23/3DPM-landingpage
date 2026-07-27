@@ -199,29 +199,142 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========================================
-   SERVICES GRID
+   SERVICES GRID (cards desplegables)
    ======================================== */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 28px;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
 }
-
+.service-card-img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
 .service-card {
-  background: var(--gradi);
   border-radius: var(--radius);
-  aspect-ratio: 1;
   border: 1px solid rgba(227, 6, 19, 0.15);
-  transition: border-color 0.25s, transform 0.25s;
   background: var(--card-bg);
+  overflow: hidden;
+  text-align: left;
+  transition: grid-column 0.3s ease, border-color 0.25s;
 }
 
 .service-card:hover {
   border-color: var(--accent);
-  transform: translateY(-3px);
 }
 
+.service-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px;
+  cursor: pointer;
+}
+
+.service-card-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.service-card-toggle {
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  font-family: var(--font-display);
+  color: var(--accent);
+  line-height: 1;
+}
+
+.service-card-expand {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 22px;
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+}
+
+.service-card.expanded .service-card-expand {
+  max-height: 500px;
+  opacity: 1;
+  padding: 0 22px 22px;
+}
+
+.service-card.expanded {
+  grid-column: 1 / -1;
+}
+
+.service-card-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.subcategory-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.subcategory-chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(227, 6, 19, 0.35);
+  color: var(--text);
+  font-size: 0.82rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.subcategory-chip:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Hover real solo en dispositivos con mouse/trackpad */
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    grid-column: 1 / -1;
+  }
+
+  .service-card:hover .service-card-expand {
+    max-height: 500px;
+    opacity: 1;
+    padding: 0 22px 22px;
+  }
+}
+/* ========================================
+   SERVICE GRID
+   ======================================== */
+   /* Lista de ítems dentro del desplegable de servicio */
+.service-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.service-items-list li {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.service-card-action {
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
 /* ========================================
    PRODUCTS GRID
    ======================================== */
@@ -287,6 +400,52 @@ a { color: inherit; text-decoration: none; }
   align-self: flex-start;
   padding: 8px 20px;
   font-size: 0.9rem;
+}
+
+/* ========================================
+   CATALOG FILTER TABS
+   ======================================== */
+.category-tabs,
+.subcategory-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.subcategory-tabs {
+  margin-bottom: 32px;
+}
+
+.filter-tab {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.filter-tab-sub {
+  font-size: 0.8rem;
+  padding: 6px 16px;
 }
 
 /* ========================================
@@ -374,7 +533,79 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 28px;
   font-size: 1rem;
 }
+/* ========================================
+   FILTRADO DE PRODUCTOS
+   ======================================== */
+   /* Imagen en las tarjetas desplegables de servicio */
+.service-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
 
+/* Contenedor general de filtros */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+/* Grupo individual (Label + Select) */
+.filter-group {
+  display: flex;
+  flex-direction: column; /* En mobile: Label ARRIBA del desplegable */
+  align-items: flex-start;
+  gap: 0.4rem;
+  width: 100%;            /* Ocupa el ancho disponible */
+  max-width: 300px;       /* Límite para que no se estire gigante en mobile */
+}
+
+.filter-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+/* Desplegable */
+.filter-select {
+  width: 100%;             /* Se adapta al 100% del grupo */
+  box-sizing: border-box;  /* Evita que el padding rompa el ancho total */
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: #1a2744; /* Cambiar por tu color de fondo */
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+  text-overflow: ellipsis; /* Si el texto es larguísimo, pone "..." en vez de desbordar */
+}
+
+.filter-select option {
+  background-color: #1a2744;
+  color: #ffffff;
+}
+
+/* Ajuste para Tablet / Desktop (pantallas de 600px o más) */
+@media (min-width: 600px) {
+  .filter-group {
+    flex-direction: row;  /* En pantallas grandes: Label AL LADO del desplegable */
+    align-items: center;
+    width: auto;
+    max-width: none;
+  }
+
+  .filter-select {
+    width: auto;          /* Recupera su tamaño según el contenido */
+  }
+}
 /* ========================================
    FOOTER
    ======================================== */
@@ -456,6 +687,10 @@ a { color: inherit; text-decoration: none; }
     align-items: stretch;
   }
 
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .section {
     margin: 0 32px 24px;
   }
@@ -508,7 +743,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .services-grid {
-    gap: 20px;
+    gap: 1rem;
   }
 
   .products-grid {
