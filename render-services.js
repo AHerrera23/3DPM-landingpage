@@ -37,15 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Imagen del servicio
     const imgHTML = servicio.imagen ? `<img src="${servicio.imagen}" alt="${servicio.label}" class="service-card-img" />` : '';
 
-    // Lista de ítems/prestaciones del servicio
-    const itemsHTML = servicio.items.map(item => `<li>✔ ${item}</li>`).join('');
-
     expand.innerHTML = `
       ${imgHTML}
       <p class="service-card-desc">${servicio.descripcion}</p>
-      <ul class="service-items-list">
-        ${itemsHTML}
-      </ul>
       <div class="service-card-action">
         <a href="${servicio.linkCatalogo}" class="btn btn-outline btn-sm">Consultar por este servicio</a>        
       </div>

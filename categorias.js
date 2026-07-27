@@ -66,12 +66,6 @@ const SERVICIOS = [
     label: 'Impresión 3D & Fabricación',
     descripcion: 'Materialización de piezas a medida en PLA, PETG y resina. Soluciones para coleccionistas, uso cotidiano y la industria.',
     imagen: 'images/servicios/impresion3d.jpg',
-    items: [
-      'Llaveros 3D y merch corporativo',
-      'Repuestos y piezas técnicas/automotrices',
-      'Figuras y coleccionables a escala',
-      'Organizadores y utilitarios'
-    ],
     // Link opcional al catálogo o a WhatsApp
     linkCatalogo: 'productos.html?categoria=accesorios'
   },
@@ -80,12 +74,6 @@ const SERVICIOS = [
     label: 'Cartelería & Corpóreos',
     descripcion: 'Diseño y corte de logotipos, carteles y letras volumétricas de gran impacto visual para comercios, marcas y eventos.',
     imagen: 'images/servicios/carteleria.jpg',
-    items: [
-      'Cartelería en Polifan',
-      'Letras corpóreas y logotipos 3D',
-      'Señalética comercial e interiorismo',
-      'Carteles retroiluminados'
-    ],
     linkCatalogo: '#contacto' // Como es a medida, lleva a contacto
   },
   {
@@ -93,11 +81,6 @@ const SERVICIOS = [
     label: 'Diseño & Modelado 3D',
     descripcion: 'Desarrollamos tu idea desde cero. Digitalización 3D, modelado CAD paramétrico y optimización de archivos STL/OBJ.',
     imagen: 'images/servicios/modelado.jpg',
-    items: [
-      'Diseño de piezas desde plano o muestra',
-      'Escaneo y reconstrucción digital',
-      'Adaptación de archivos para impresión'
-    ],
     linkCatalogo: '#contacto'
   }
 ];
