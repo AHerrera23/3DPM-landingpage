@@ -1,18 +1,18 @@
 /* ========================================
-   TOKENS
+   TOKENS & VARIABLES
    ======================================== */
 :root {
-  --bg:        #0d1b3e;
-  --bg-dark:   #0B3249;
-  --accent:    #E30613;
-  --accent-lt: #ff1a26;
-  --text:      #e8eaf0;
-  --text-muted:#99a0b4;
-  --card-bg:   #1a2a52;
-  --radius:    12px;
-  --radius-lg: 28px;
-  --font-display: 'Rajdhani', sans-serif;
-  --font-body:    'Inter', sans-serif;
+  --bg:          #0d1b3e;
+  --bg-dark:     #0B3249;
+  --accent:      #E30613;
+  --accent-lt:   #ff1a26;
+  --text:        #e8eaf0;
+  --text-muted:  #99a0b4;
+  --card-bg:     #1a2a52;
+  --radius:      12px;
+  --radius-lg:   28px;
+  --font-display:'Rajdhani', sans-serif;
+  --font-body:   'Inter', sans-serif;
   --gradient-main: linear-gradient(
     to bottom,
     rgb(11, 50, 73)   0%,
@@ -24,9 +24,15 @@
 /* ========================================
    RESET & BASE
    ======================================== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--gradient-main);
@@ -37,9 +43,17 @@ body {
   overflow-x: hidden;
 }
 
-img { display: block; width: 100%; height: auto; object-fit: cover; }
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 
-a { color: inherit; text-decoration: none; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 /* ========================================
    NAVBAR
@@ -56,16 +70,17 @@ a { color: inherit; text-decoration: none; }
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(227, 6, 19, 0.3);
 }
+
 .navbar .logo {
-  display: flex;        /* Mantiene el enlace ajustado exactamente al tamaño del logo */
+  display: flex;
   align-items: center;
-  width: auto;          /* Toma solo el ancho que ocupa la imagen */
-  flex-shrink: 0;       /* Evita que el logo se aplaste si el menú crece */
+  width: auto;
+  flex-shrink: 0;
 }
 
 .logoImg {
-  width: 140px;         /* Le das un ancho fijo adecuado para mobile/desktop */
-  height: auto;         /* Mantiene la proporción de la imagen sin deformarla */
+  width: 140px;
+  height: auto;
 }
 
 .menu-btn {
@@ -103,7 +118,9 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid rgba(227, 6, 19, 0.3);
 }
 
-.nav-links.open { display: flex; }
+.nav-links.open {
+  display: flex;
+}
 
 .nav-links a {
   font-family: var(--font-display);
@@ -114,7 +131,9 @@ a { color: inherit; text-decoration: none; }
   transition: color 0.2s;
 }
 
-.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover {
+  color: var(--accent);
+}
 
 /* ========================================
    HERO
@@ -128,7 +147,9 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 
-.hero-content { max-width: 480px; }
+.hero-content {
+  max-width: 480px;
+}
 
 .hero h1 {
   font-family: var(--font-display);
@@ -146,7 +167,9 @@ a { color: inherit; text-decoration: none; }
   max-width: 360px;
 }
 
-.accent { color: var(--accent); }
+.accent {
+  color: var(--accent);
+}
 
 .scroll-hint {
   margin-top: 48px;
@@ -169,8 +192,15 @@ a { color: inherit; text-decoration: none; }
   50%       { transform: translateY(6px); }
 }
 
+.wave-divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.4), transparent);
+  margin-top: 40px;
+}
+
 /* ========================================
-   SECTIONS (glass effect)
+   SECTIONS (Glassmorphism)
    ======================================== */
 .section {
   position: relative;
@@ -206,29 +236,21 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========================================
-   SERVICES GRID (cards desplegables)
+   SERVICES GRID (Tarjetas Desplegables)
    ======================================== */
 .services-grid {
   display: flex;
-  gap: 1rem;
   flex-direction: column;
+  gap: 1rem;
 }
-.service-card-img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
+
 .service-card {
   border-radius: var(--radius);
   border: 1px solid rgba(227, 6, 19, 0.15);
   background: var(--card-bg);
   overflow: hidden;
   text-align: left;
-  transition: grid-column 0.3s ease, border-color 0.25s;
-}
-
-.service-card:hover {
-  border-color: var(--accent);
+  transition: all 0.3s ease;
 }
 
 .service-card-header {
@@ -256,21 +278,32 @@ a { color: inherit; text-decoration: none; }
 }
 
 .service-card-expand {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-height: 0;
-  overflow: hidden;
   opacity: 0;
+  visibility: hidden;
   padding: 0 22px;
-  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              visibility 0.3s ease,
+              padding 0.3s ease;
 }
 
 .service-card.expanded .service-card-expand {
-  max-height: 500px;
+  max-height: 600px;
   opacity: 1;
+  visibility: visible;
   padding: 0 22px 22px;
 }
 
-.service-card.expanded {
-  grid-column: 1 / -1;
+.service-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .service-card-desc {
@@ -302,55 +335,6 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
 }
 
-/* Hover real solo en dispositivos con mouse/trackpad */
-@media (hover: hover) and (pointer: fine) {
-  .service-card:hover {
-    grid-column: 1 / -1;
-  }
-
-  .service-card:hover .service-card-expand {
-    max-height: 500px;
-    opacity: 1;
-    padding: 0 22px 22px;
-  }
-}
-/* ========================================
-   SERVICE GRID
-   ======================================== */
-.service-card {
-  transition: all 0.3s ease;
-  overflow: hidden; 
-}
-
-/* El contenido desplegable colapsado por defecto */
-.service-card-expand {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  
-  max-height: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              visibility 0.3s ease,
-              padding 0.3s ease;
-  
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-/* 1. APERTURA POR CLICK (Mobile y Touch) */
-/* Depende exclusivamente de la clase .expanded controlada por el evento click de JS */
-.service-card.expanded .service-card-expand {
-  max-height: 600px;
-  opacity: 1;
-  visibility: visible;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-/* Botón de acción */
 .service-card-action {
   margin-top: 1.2rem;
   width: 100%;
@@ -363,10 +347,59 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   max-width: 280px;
   text-align: center;
-  box-sizing: border-box;
 }
+
 /* ========================================
-   PRODUCTS GRID
+   FILTROS DESPLEGABLES (CATÁLOGO)
+   ======================================== */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.filter-group label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.filter-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(227, 6, 19, 0.4);
+  background-color: #1a2744;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+  text-overflow: ellipsis;
+}
+
+.filter-select option {
+  background-color: #1a2744;
+  color: #ffffff;
+}
+
+/* ========================================
+   PRODUCTS GRID & EMPTY STATE
    ======================================== */
 .products-grid {
   display: flex;
@@ -374,6 +407,15 @@ a { color: inherit; text-decoration: none; }
   gap: 16px;
   margin-top: 24px;
   margin-bottom: 28px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  width: 100%;
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
 .product-card {
@@ -433,53 +475,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========================================
-   CATALOG FILTER TABS
-   ======================================== */
-.category-tabs,
-.subcategory-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.subcategory-tabs {
-  margin-bottom: 32px;
-}
-
-.filter-tab {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 8px 20px;
-  border-radius: 999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-tab:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-
-.filter-tab.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-
-.filter-tab-sub {
-  font-size: 0.8rem;
-  padding: 6px 16px;
-}
-
-/* ========================================
-   PRODUCTS PAGE HEADER
+   PRODUCTS PAGE HEADER & BACK LINK
    ======================================== */
 .products-header {
   padding: 140px 28px 20px;
@@ -557,85 +553,15 @@ a { color: inherit; text-decoration: none; }
 /* ========================================
    CTA SECTION
    ======================================== */
-.cta-section { text-align: center; }
+.cta-section {
+  text-align: center;
+}
 
 .cta-section .section-inner p {
   margin-bottom: 28px;
   font-size: 1rem;
 }
-/* ========================================
-   FILTRADO DE PRODUCTOS
-   ======================================== */
-   /* Imagen en las tarjetas desplegables de servicio */
-.service-card-img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
 
-/* Contenedor general de filtros */
-.filters-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1.2rem;
-  margin-bottom: 2.5rem;
-  width: 100%;
-}
-
-/* Grupo individual (Label + Select) */
-.filter-group {
-  display: flex;
-  flex-direction: column; /* En mobile: Label ARRIBA del desplegable */
-  align-items: flex-start;
-  gap: 0.4rem;
-  width: 100%;            /* Ocupa el ancho disponible */
-  max-width: 300px;       /* Límite para que no se estire gigante en mobile */
-}
-
-.filter-group label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #ffffff;
-}
-
-/* Desplegable */
-.filter-select {
-  width: 100%;             /* Se adapta al 100% del grupo */
-  box-sizing: border-box;  /* Evita que el padding rompa el ancho total */
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background-color: #1a2744; /* Cambiar por tu color de fondo */
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.95rem;
-  cursor: pointer;
-  outline: none;
-  text-overflow: ellipsis; /* Si el texto es larguísimo, pone "..." en vez de desbordar */
-}
-
-.filter-select option {
-  background-color: #1a2744;
-  color: #ffffff;
-}
-
-/* Ajuste para Tablet / Desktop (pantallas de 600px o más) */
-@media (min-width: 600px) {
-  .filter-group {
-    flex-direction: row;  /* En pantallas grandes: Label AL LADO del desplegable */
-    align-items: center;
-    width: auto;
-    max-width: none;
-  }
-
-  .filter-select {
-    width: auto;          /* Recupera su tamaño según el contenido */
-  }
-}
 /* ========================================
    FOOTER
    ======================================== */
@@ -675,11 +601,16 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.8;
 }
 
-.footer a { color: var(--accent); }
-.footer a:hover { text-decoration: underline; }
+.footer a {
+  color: var(--accent);
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
 
 /* ========================================
-   SCROLL REVEAL (clase aplicada por JS)
+   SCROLL REVEAL
    ======================================== */
 .reveal {
   opacity: 0;
@@ -693,10 +624,28 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========================================
-   RESPONSIVE (tablet+)
+   RESPONSIVE (TABLET - 600px+)
+   ======================================== */
+@media (min-width: 600px) {
+  .filter-group {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    max-width: none;
+  }
+
+  .filter-select {
+    width: auto;
+  }
+}
+
+/* ========================================
+   RESPONSIVE (TABLET - 768px+)
    ======================================== */
 @media (min-width: 768px) {
-  .menu-btn { display: none; }
+  .menu-btn {
+    display: none;
+  }
 
   .nav-links {
     display: flex;
@@ -709,8 +658,8 @@ a { color: inherit; text-decoration: none; }
   }
 
   .products-grid {
-    grid-template-columns: 1fr 1fr;
     display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
   .products-grid.full-catalog {
@@ -718,28 +667,30 @@ a { color: inherit; text-decoration: none; }
   }
 
   .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
   }
 
   .section {
     margin: 0 32px 24px;
   }
 
-  .hero h1 { font-size: 3rem; }
+  .hero h1 {
+    font-size: 3rem;
+  }
 }
 
 /* ========================================
-   RESPONSIVE (desktop / web)
+   RESPONSIVE (DESKTOP - 1024px+) & HOVER
    ======================================== */
 @media (min-width: 1024px) {
   .navbar {
     padding: 20px 48px;
   }
 
- .logoImg {
-  width: 140px;         /* Le das un ancho fijo adecuado para mobile/desktop */
-  height: auto;         /* Mantiene la proporción de la imagen sin deformarla */
-}
+  .logoImg {
+    width: 140px;
+    height: auto;
+  }
 
   .hero {
     padding: 220px 100px 80px;
@@ -774,26 +725,11 @@ a { color: inherit; text-decoration: none; }
   }
 
   .services-grid {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
   }
-  /* 2. APERTURA POR HOVER (Solo en Desktop con Mouse) */
-/* Al meterlo dentro de la media query, en celulares esto se ignora por completo */
-@media (hover: hover) and (pointer: fine) {
-  .service-card:hover .service-card-expand {
-    max-height: 600px;
-    opacity: 1;
-    visibility: visible;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-  .service-card-toggle{
-    display: none !important;
-  }
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-  }
-}
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -808,7 +744,28 @@ a { color: inherit; text-decoration: none; }
   .footer {
     padding: 56px 24px;
   }
+
   .footer .logoImgFooter {
-  width: 10%;
+    width: 10%;
+  }
 }
+
+/* Hover real solo en escritorio con mouse */
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    border-color: var(--accent);
+  }
+
+  .service-card:hover .service-card-expand {
+    max-height: 600px;
+    opacity: 1;
+    visibility: visible;
+    padding-bottom: 1rem;
+  }
+
+  .service-card-toggle {
+    display: none !important;
+  }
 }
