@@ -9,7 +9,7 @@
   background: var(--gradient-main);
   color: var(--text);
   font-family: var(--font-body);
-  padding: 24px;
+  padding: 16px;
 }
 
 /* --- LOGIN --- */
@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
 }
 
 .admin-login-box {
@@ -26,12 +27,13 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-lg);
-  padding: 40px 32px;
-  max-width: 380px;
+  padding: 32px 20px;
+  max-width: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  box-sizing: border-box;
 }
 
 .admin-login-box h1 {
@@ -74,7 +76,9 @@
   padding: 10px 12px;
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 1rem; /* 16px previene el zoom automático de iOS */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-login-box input:focus,
@@ -93,20 +97,21 @@
 .admin-wrapper {
   max-width: 900px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .admin-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
 
 .admin-header h1 {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
 .admin-form-section,
@@ -116,41 +121,49 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-lg);
-  padding: 28px;
-  margin-bottom: 28px;
+  padding: 20px;
+  margin-bottom: 24px;
 }
 
 .admin-form-section h2,
 .admin-list-section h2 {
   font-family: var(--font-display);
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .admin-form {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 16px;
+}
+
+/* Clase de utilidad para obligar a un elemento a ocupar todo el ancho */
+.admin-form .full-width {
+  grid-column: 1 / -1;
 }
 
 .admin-form-actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 .admin-image-preview {
-  width: 120px;
-  height: 90px;
+  width: 100px;
+  height: 80px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 8px;
 }
 
 .admin-help-text {
   color: var(--text-muted);
   font-size: 0.78rem;
   line-height: 1.5;
-  margin-top: -8px;
+  margin-top: -4px;
 }
 
 /* --- Lista de productos cargados --- */
@@ -161,42 +174,51 @@
 }
 
 .admin-product-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.03);
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .admin-product-row img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 8px;
-  flex-shrink: 0;
 }
 
 .admin-product-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 160px;
+  gap: 4px;
+  min-width: 0; /* Evita que los nombres largos rompan el grid */
+}
+
+.admin-product-info h4 {
+  font-size: 0.95rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-product-info span {
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
 .admin-product-actions {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .admin-toggle {
@@ -205,10 +227,60 @@
   gap: 6px;
   font-size: 0.82rem;
   color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* ============================================
+   RESPONSIVE — PANTALLAS DE MÁS DE 600px / 768px
+   ============================================ */
+
+@media (min-width: 600px) {
+  .admin-login-box {
+    padding: 40px 32px;
+  }
+
+  .admin-product-row {
+    grid-template-columns: 60px 1fr auto;
+    gap: 16px;
+  }
+
+  .admin-product-row img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .admin-product-actions {
+    grid-column: auto;
+    border-top: none;
+    padding-top: 0;
+    justify-content: flex-end;
+  }
 }
 
 @media (min-width: 768px) {
   .admin-body {
-    padding: 48px;
+    padding: 40px 24px;
+  }
+
+  .admin-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .admin-form-section,
+  .admin-list-section {
+    padding: 28px;
+  }
+
+  /* Formulario en 2 columnas para desktop */
+  .admin-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Elementos que deben ocupar ambas columnas */
+  .admin-form label:has(textarea),
+  .admin-form .full-width,
+  .admin-form-actions,
+  .admin-help-text {
+    grid-column: span 2;
   }
 }
