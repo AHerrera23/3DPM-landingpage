@@ -37,11 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Imagen del servicio
     const imgHTML = servicio.imagen ? `<img src="${servicio.imagen}" alt="${servicio.label}" class="service-card-img" />` : '';
 
+    // funcion de wsp
+    const linkWsp = obtenerLinkAlinkaWhatsapp(servicio)
+
     expand.innerHTML = `
       ${imgHTML}
       <p class="service-card-desc">${servicio.descripcion}</p>
       <div class="service-card-action">
-        <a href="${servicio.linkCatalogo}" class="btn btn-outline btn-sm">Consultar por este servicio</a>        
+        <a href="${linkWsp}" class="btn btn-outline btn-sm">Consultar por este servicio</a>
+        <a href="${servicio.linkCatalogo}" class="btn btn-outline btn-sm">Ver catalogo</a>        
+      </div>        
       </div>
     `;
 

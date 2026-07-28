@@ -14,6 +14,7 @@
 // ============================================
 // CATEGORÍAS Y SUBCATEGORÍAS
 // ============================================
+const TELEFONO= 5491150522026;
 
 const CATEGORIAS = [
   {
@@ -67,7 +68,8 @@ const SERVICIOS = [
     descripcion: 'Materialización de piezas a medida en PLA, PETG y resina. Soluciones para coleccionistas, uso cotidiano y la industria.',
     imagen: 'images/servicios/impresion3d.jpg',
     // Link opcional al catálogo o a WhatsApp
-    linkCatalogo: 'productos.html?categoria=accesorios'
+    linkCatalogo: 'productos.html?categoria=accesorios',
+    linkaWhatsapp: 'https://wa.me/5491112345678?text=Hola,%20quisiera%20consultar%20por%20el%20servicio%20de%20impresión%203D'
   },
   {
     slug: 'carteleria',
@@ -84,3 +86,12 @@ const SERVICIOS = [
     linkCatalogo: '#contacto'
   }
 ];
+
+// ============================================
+// FUNCION CONTACTO
+// ============================================
+
+function obtenerLinkAlinkaWhatsapp(servicio){
+const mensaje = `Hola! Quisiera consultar sobre el servicio de ${servicio.label} (ref: ${servicio.slug})`
+return `https://wa.me/${TELEFONO}?text=${encodeURIComponent(mensaje)}`
+}
