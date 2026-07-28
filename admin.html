@@ -14,7 +14,7 @@
   <div id="login-view" class="admin-login-wrapper">
     <form id="login-form" class="admin-login-box">
       <h1>Panel de administración</h1>
-      <p class="admin-subtitle">Ingresá con la cuenta que te compartió ahdesign.</p>
+      <p class="admin-subtitle">Ingresá con tu cuenta de administrador.</p>
       <label>
         Email
         <input type="email" id="login-email" required autocomplete="username" />
@@ -31,10 +31,52 @@
   <!-- PANEL -->
   <div id="admin-view" class="admin-wrapper" style="display:none;">
     <header class="admin-header">
-      <h1>Productos de 3DPM</h1>
+      <h1>Panel de Control — 3DPM</h1>
       <button id="logout-btn" class="btn btn-outline">Cerrar sesión</button>
     </header>
 
+    <!-- SECCIÓN 1: GESTIÓN DE CATEGORÍAS -->
+    <section class="admin-form-section">
+      <h2 id="cat-form-title">Agregar categoría</h2>
+      <form id="category-form" class="admin-form">
+        <input type="hidden" id="cat-editing-id" value="" />
+
+        <label>
+          Nombre de la Categoría
+          <input type="text" id="cat-label" placeholder="Ej: Figuras y Coleccionables" required />
+        </label>
+
+        <label>
+          Descripción (Opcional)
+          <input type="text" id="cat-descripcion" placeholder="Ej: Impresión y modelado de figuras articuladas" />
+        </label>
+
+        <!-- Subcategorías -->
+        <div class="subcategories-manager" style="margin-top: 10px;">
+          <label>Subcategorías</label>
+          <div id="subcategories-list" style="margin-bottom: 8px;"></div>
+          
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="new-subcat-label" placeholder="Ej: Articuladas" style="margin: 0;" />
+            <button type="button" id="add-subcat-btn" class="btn btn-outline btn-sm">+ Añadir</button>
+          </div>
+        </div>
+
+        <div class="admin-form-actions" style="margin-top: 15px;">
+          <button type="submit" id="cat-submit-btn" class="btn btn-solid">Agregar categoría</button>
+          <button type="button" id="cat-cancel-btn" class="btn btn-outline" style="display:none;">Cancelar</button>
+        </div>
+      </form>
+
+      <h3 style="margin-top: 25px;">Categorías creadas</h3>
+      <div id="admin-category-list" class="admin-product-list">
+        <p class="empty-state">Cargando categorías...</p>
+      </div>
+    </section>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;" />
+
+    <!-- SECCIÓN 2: GESTIÓN DE PRODUCTOS -->
     <section class="admin-form-section">
       <h2 id="form-title">Agregar producto</h2>
       <form id="product-form" class="admin-form">
@@ -52,7 +94,9 @@
 
         <label>
           Categoría
-          <select id="categoria" required></select>
+          <select id="categoria" required>
+            <option value="">Cargando categorías...</option>
+          </select>
         </label>
 
         <label>
@@ -90,7 +134,6 @@
     </section>
   </div>
 
-  <script src="categorias.js"></script>
   <script type="module" src="admin.js"></script>
 </body>
 </html>
