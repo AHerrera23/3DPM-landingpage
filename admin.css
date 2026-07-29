@@ -214,11 +214,16 @@
 .admin-product-actions {
   grid-column: 1 / -1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.botonera{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .admin-toggle {
@@ -252,6 +257,7 @@
   .admin-product-actions {
     grid-column: auto;
     border-top: none;
+    flex-direction: row;
     padding-top: 0;
     justify-content: flex-end;
   }

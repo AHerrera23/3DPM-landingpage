@@ -142,8 +142,11 @@ function renderizarListaCategorias() {
           <span>${subNombres}</span>
         </div>
         <div class="admin-product-actions">
+        <div class="botonera">
           <button data-id="${cat.id}" data-action="edit-cat" class="btn btn-outline">Editar</button>
           <button data-id="${cat.id}" data-action="delete-cat" class="btn btn-outline">Eliminar</button>
+          </div>
+
         </div>
       </div>
     `;
@@ -317,8 +320,10 @@ function escucharProductos() {
             <input type="checkbox" ${p.activo ? 'checked' : ''} data-id="${docSnap.id}" data-action="toggle" />
             Activo
           </label>
-          <button data-id="${docSnap.id}" data-action="edit" class="btn btn-outline">Editar</button>
-          <button data-id="${docSnap.id}" data-action="delete" class="btn btn-outline">Eliminar</button>
+          <div class="botonera">
+            <button data-id="${docSnap.id}" data-action="edit" class="btn btn-outline">Editar</button>
+            <button data-id="${docSnap.id}" data-action="delete" class="btn btn-outline">Eliminar</button>
+          </div>
         </div>
       `;
       productList.appendChild(row);
