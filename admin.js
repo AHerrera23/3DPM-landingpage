@@ -13,6 +13,15 @@ import {
   onSnapshot, query, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+// --- Seguridad: escapar texto antes de insertarlo como HTML ---
+// Evita XSS almacenado si algún campo de Firestore (nombre, descripcion, label)
+// contiene HTML/JS malicioso. SIEMPRE se usa antes de interpolar en innerHTML.
+function escapeHTML(str = '') {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 // --- Elementos del DOM ---
 const loginView = document.getElementById('login-view');
 const adminView = document.getElementById('admin-view');
@@ -132,13 +141,13 @@ function renderizarListaCategorias() {
 
   adminCategoryList.innerHTML = categoriasData.map(cat => {
     const subNombres = cat.subcategorias && cat.subcategorias.length > 0
-      ? cat.subcategorias.map(s => s.label).join(', ')
+      ? cat.subcategorias.map(s => escapeHTML(s.label)).join(', ')
       : 'Sin subcategorías';
 
     return `
       <div class="admin-product-row">
         <div class="admin-product-info">
-          <strong>${cat.label} <small style="color:#888;">(${cat.slug})</small></strong>
+          <strong>${escapeHTML(cat.label)} <small style="color:#888;">(${escapeHTML(cat.slug)})</small></strong>
           <span>${subNombres}</span>
         </div>
         <div class="admin-product-actions">
@@ -167,7 +176,7 @@ addSubcatBtn.addEventListener('click', () => {
 function renderSubcategoriasForm() {
   subcatList.innerHTML = subcategoriasTemporales.map((sub, index) => `
     <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:4px; margin: 2px;">
-      <small><strong>${sub.label}</strong></small>
+      <small><strong>${escapeHTML(sub.label)}</strong></small>
       <button type="button" data-index="${index}" data-action="remove-subcat" style="background:none; border:none; color:#e30613; cursor:pointer; font-weight:bold;">✕</button>
     </div>
   `).join('');
@@ -308,12 +317,16 @@ function escucharProductos() {
       const p = docSnap.data();
       const row = document.createElement('div');
       row.className = 'admin-product-row';
+      // Solo permitimos que la imagen cargue si es una URL http(s); evita src="javascript:..."
+      const imgSrc = /^https?:\/\//i.test(p.imagenUrl || '')
+        ? p.imagenUrl
+        : 'https://placehold.co/80x80/1a2744/ffffff?text=Sin+foto';
       row.innerHTML = `
-        <img src="${p.imagenUrl || 'https://placehold.co/80x80/1a2744/ffffff?text=Sin+foto'}" alt="${p.nombre}" />
+        <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(p.nombre)}" />
         <div class="admin-product-info">
-          <strong>${p.nombre}</strong>
-          <span>${formatearCategoria(p.categoria, p.subcategoria)}</span>
-          <span class="product-price">$${p.precio}</span>
+          <strong>${escapeHTML(p.nombre)}</strong>
+          <span>${escapeHTML(formatearCategoria(p.categoria, p.subcategoria))}</span>
+          <span class="product-price">$${Number(p.precio) || 0}</span>
         </div>
         <div class="admin-product-actions">
           <label class="admin-toggle">

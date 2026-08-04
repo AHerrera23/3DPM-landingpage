@@ -7,6 +7,15 @@ import {
   collection, query, orderBy, onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+// --- Seguridad: escapar texto antes de insertarlo como HTML ---
+// Evita XSS almacenado si algún campo de Firestore (nombre, descripcion, label)
+// contiene HTML/JS malicioso. SIEMPRE se usa antes de interpolar en innerHTML.
+function escapeHTML(str = '') {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 // --- Elementos del DOM ---
 const grid = document.getElementById('catalogo-grid');
 const categorySelect = document.getElementById('category-select');
@@ -36,7 +45,7 @@ function renderCategorySelect() {
   let html = `<option value="todas">Todas las categorías</option>`;
   categoriasCache.forEach(cat => {
     const selected = activeCategoria === cat.slug ? 'selected' : '';
-    html += `<option value="${cat.slug}" ${selected}>${cat.label}</option>`;
+    html += `<option value="${escapeHTML(cat.slug)}" ${selected}>${escapeHTML(cat.label)}</option>`;
   });
 
   categorySelect.innerHTML = html;
@@ -69,7 +78,7 @@ function renderSubcategorySelect() {
   let html = `<option value="todas">Todas las subcategorías</option>`;
   cat.subcategorias.forEach(sub => {
     const selected = activeSubcategoria === sub.slug ? 'selected' : '';
-    html += `<option value="${sub.slug}" ${selected}>${sub.label}</option>`;
+    html += `<option value="${escapeHTML(sub.slug)}" ${selected}>${escapeHTML(sub.label)}</option>`;
   });
 
   subcategorySelect.innerHTML = html;
@@ -98,13 +107,17 @@ function renderProductos() {
   grid.innerHTML = filtrados.map(p => {
     const mensajeWsp = `Hola! Quisiera consultar por el producto: ${p.nombre}`;
     const linkWsp = `https://wa.me/5491150522026?text=${encodeURIComponent(mensajeWsp)}`;
+    // Solo permitimos que la imagen cargue si es una URL http(s); evita src="javascript:..."
+    const imgSrc = /^https?:\/\//i.test(p.imagenUrl || '')
+      ? p.imagenUrl
+      : 'https://placehold.co/320x240/1a2744/ffffff?text=Sin+foto';
 
     return `
-      <div class="product-card" data-categoria="${p.categoria}" data-subcategoria="${p.subcategoria}">
-        <img src="${p.imagenUrl || 'https://placehold.co/320x240/1a2744/ffffff?text=Sin+foto'}" alt="${p.nombre}" loading="lazy" />
+      <div class="product-card" data-categoria="${escapeHTML(p.categoria)}" data-subcategoria="${escapeHTML(p.subcategoria)}">
+        <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(p.nombre)}" loading="lazy" />
         <div class="product-card-body">
-          <h3>${p.nombre}</h3>
-          <p class="product-desc">${p.descripcion || ''}</p>
+          <h3>${escapeHTML(p.nombre)}</h3>
+          <p class="product-desc">${escapeHTML(p.descripcion || '')}</p>
           <span class="product-price">$${Number(p.precio).toLocaleString('es-AR')}</span>
           <a href="${linkWsp}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Consultar</a>
         </div>

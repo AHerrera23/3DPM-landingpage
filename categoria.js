@@ -10,6 +10,15 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+// --- Seguridad: escapar texto antes de insertarlo como HTML ---
+// Evita XSS almacenado si algún campo de Firestore (nombre, descripcion, label)
+// contiene HTML/JS malicioso. SIEMPRE se usa antes de interpolar en innerHTML.
+function escapeHTML(str = '') {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
 // --- Elementos del DOM ---
 const categoryFiltersContainer = document.getElementById('category-filters');
 const subcategoryFiltersContainer = document.getElementById('subcategory-filters');
@@ -71,8 +80,8 @@ function renderizarFiltrosCategorias() {
 
   listaCategorias.forEach(cat => {
     html += `
-      <button class="filter-btn ${categoriaActiva === cat.slug ? 'active' : ''}" data-slug="${cat.slug}">
-        ${cat.label}
+      <button class="filter-btn ${categoriaActiva === cat.slug ? 'active' : ''}" data-slug="${escapeHTML(cat.slug)}">
+        ${escapeHTML(cat.label)}
       </button>
     `;
   });
@@ -102,14 +111,14 @@ function renderizarFiltrosSubcategorias() {
 
   let html = `
     <button class="subfilter-btn ${subcategoriaActiva === 'todas' ? 'active' : ''}" data-subslug="todas">
-      Todo en ${catActual.label}
+      Todo en ${escapeHTML(catActual.label)}
     </button>
   `;
 
   catActual.subcategorias.forEach(sub => {
     html += `
-      <button class="subfilter-btn ${subcategoriaActiva === sub.slug ? 'active' : ''}" data-subslug="${sub.slug}">
-        ${sub.label}
+      <button class="subfilter-btn ${subcategoriaActiva === sub.slug ? 'active' : ''}" data-subslug="${escapeHTML(sub.slug)}">
+        ${escapeHTML(sub.label)}
       </button>
     `;
   });
@@ -138,15 +147,19 @@ function renderizarProductos() {
   productGrid.innerHTML = filtrados.map(p => {
     const mensajeWsp = `Hola! Quisiera consultar por el producto: ${p.nombre}`;
     const linkWsp = `https://wa.me/${numeroWsp}?text=${encodeURIComponent(mensajeWsp)}`;
+    // Solo permitimos que la imagen cargue si es una URL http(s); evita src="javascript:..."
+    const imgSrc = /^https?:\/\//i.test(p.imagenUrl || '')
+      ? p.imagenUrl
+      : 'https://placehold.co/300x200/1a2744/ffffff?text=Sin+foto';
 
     return `
       <article class="product-card">
         <div class="product-image-container">
-          <img src="${p.imagenUrl || 'https://placehold.co/300x200/1a2744/ffffff?text=Sin+foto'}" alt="${p.nombre}" loading="lazy" />
+          <img src="${escapeHTML(imgSrc)}" alt="${escapeHTML(p.nombre)}" loading="lazy" />
         </div>
         <div class="product-content">
-          <h3>${p.nombre}</h3>
-          <p class="product-description">${p.descripcion || ''}</p>
+          <h3>${escapeHTML(p.nombre)}</h3>
+          <p class="product-description">${escapeHTML(p.descripcion || '')}</p>
           <div class="product-footer">
             <span class="product-price">$${Number(p.precio).toLocaleString('es-AR')}</span>
             <a href="${linkWsp}" target="_blank" rel="noopener noreferrer" class="btn btn-solid btn-sm">
